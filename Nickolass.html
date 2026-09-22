@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#f6c833">
+<title>Para mi mami 💛</title>
+
+<style>
+:root{
+  --gold:#e0a60e;
+  --yellow:#ffd84f;
+  --yellow2:#f5bd1d;
+  --cream:#fff9df;
+  --text:#4c4538;
+  --green:#4f8f57;
+  --darkgreen:#356c42;
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+  -webkit-tap-highlight-color:transparent;
+}
+
+html,body{
+  width:100%;
+  min-height:100%;
+}
+
+body{
+  font-family:Arial, Helvetica, sans-serif;
+  background:
+    radial-gradient(circle at 20% 10%,rgba(255,255,255,.95),transparent 24%),
+    radial-gradient(circle at 82% 18%,rgba(255,255,255,.5),transparent 18%),
+    linear-gradient(160deg,#fffbe7 0%,#ffe98f 52%,#f4c63b 100%);
+  color:var(--text);
+  overflow:hidden;
+}
+
+button{
+  font:inherit;
+}
+
+/* Fondo vivo */
+.bg{
+  position:fixed;
+  inset:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+
+.orb{
+  position:absolute;
+  border-radius:50%;
+  background:rgba(255,255,255,.28);
+  filter:blur(2px);
+  animation:orb 8s ease-in-out infinite alternate;
+}
+
+.o1{width:160px;height:160px;left:-45px;top:8%}
+.o2{width:115px;height:115px;right:-25px;top:28%;animation-delay:1s}
+.o3{width:90px;height:90px;left:12%;bottom:5%;animation-delay:2s}
+
+@keyframes orb{
+  from{transform:translateY(0) scale(1)}
+  to{transform:translateY(-22px) scale(1.12)}
+}
+
+/* App */
+.app{
+  position:relative;
+  z-index:2;
+  width:100%;
+  height:100svh;
+  min-height:600px;
+}
+
+.scene{
+  position:absolute;
+  inset:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:
+    max(18px, env(safe-area-inset-top))
+    18px
+    max(18px, env(safe-area-inset-bottom));
+  opacity:0;
+  pointer-events:none;
+  transform:scale(.985);
+  transition:opacity .55s ease, transform .55s ease;
+}
+
+.scene.active{
+  opacity:1;
+  pointer-events:auto;
+  transform:scale(1);
+}
+
+.card{
+  width:min(92vw,440px);
+  height:min(90svh,760px);
+  min-height:560px;
+  background:rgba(255,255,255,.88);
+  border:1px solid rgba(255,255,255,.95);
+  border-radius:30px;
+  box-shadow:0 24px 70px rgba(123,88,6,.22);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+  position:relative;
+  overflow:hidden;
+}
+
+/* Intro */
+.intro-card{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:34px 24px;
+}
+
+.eyebrow{
+  font-size:.75rem;
+  letter-spacing:2.4px;
+  text-transform:uppercase;
+  color:#a87911;
+  font-weight:700;
+  margin-bottom:12px;
+}
+
+h1,h2{
+  font-family:Georgia,"Times New Roman",serif;
+  color:#ad7806;
+}
+
+h1{
+  font-size:clamp(2.8rem,12vw,4.1rem);
+  line-height:.98;
+  margin-bottom:14px;
+}
+
+.intro-copy{
+  max-width:320px;
+  font-size:1rem;
+  line-height:1.6;
+  color:#6a6255;
+  margin-bottom:26px;
+}
+
+/* Sobre */
+.envelope{
+  width:190px;
+  height:135px;
+  position:relative;
+  margin:2px auto 30px;
+  animation:floatEnvelope 2.2s ease-in-out infinite;
+  filter:drop-shadow(0 15px 15px rgba(143,99,0,.18));
+}
+
+@keyframes floatEnvelope{
+  0%,100%{transform:translateY(0)}
+  50%{transform:translateY(-8px)}
+}
+
+.env-body{
+  position:absolute;
+  left:0;right:0;bottom:0;
+  height:110px;
+  background:linear-gradient(145deg,#ffdb5c,#f1b717);
+  border-radius:9px 9px 17px 17px;
+  overflow:hidden;
+}
+
+.env-body:before,
+.env-body:after{
+  content:"";
+  position:absolute;
+  width:140px;
+  height:140px;
+  top:8px;
+  background:rgba(255,237,146,.43);
+  transform:rotate(45deg);
+}
+
+.env-body:before{left:-70px}
+.env-body:after{right:-70px}
+
+.env-flap{
+  position:absolute;
+  top:24px;
+  left:0;
+  border-left:95px solid transparent;
+  border-right:95px solid transparent;
+  border-top:72px solid #ffe88f;
+  transform-origin:top center;
+  transition:transform .85s cubic-bezier(.2,.8,.2,1);
+  z-index:3;
+}
+
+.envelope.open .env-flap{
+  transform:rotateX(180deg);
+}
+
+.env-heart{
+  position:absolute;
+  left:50%;
+  top:78px;
+  transform:translate(-50%,-50%);
+  font-size:34px;
+  z-index:4;
+  transition:.75s ease;
+}
+
+.envelope.open .env-heart{
+  transform:translate(-50%,-90px) scale(1.4);
+  opacity:0;
+}
+
+.primary,
+.secondary{
+  border:0;
+  border-radius:999px;
+  min-height:52px;
+  padding:0 24px;
+  font-weight:700;
+  cursor:pointer;
+  transition:transform .2s ease, box-shadow .2s ease;
+}
+
+.primary:active,
+.secondary:active{
+  transform:scale(.97);
+}
+
+.primary{
+  background:linear-gradient(135deg,#ffe56f,#f4bd1c);
+  color:#493908;
+  box-shadow:0 11px 24px rgba(171,118,0,.2);
+}
+
+.small-sign{
+  margin-top:17px;
+  font-size:.88rem;
+  color:#8a7d65;
+}
+
+/* Escena flores */
+.flower-card{
+  display:flex;
+  flex-direction:column;
+  justify-content:flex-end;
+  padding:0 20px 26px;
+  text-align:center;
+}
+
+.sky-note{
+  position:absolute;
+  top:28px;
+  width:100%;
+  left:0;
+  padding:0 20px;
+  z-index:3;
+}
+
+.sky-note .eyebrow{
+  margin-bottom:8px;
+}
+
+.sky-note h2{
+  font-size:2.3rem;
+}
+
+.garden{
+  position:absolute;
+  left:0;right:0;
+  bottom:0;
+  height:58%;
+  overflow:hidden;
+}
+
+.grass{
+  position:absolute;
+  left:-5%;
+  bottom:-26px;
+  width:110%;
+  height:120px;
+  background:
+    radial-gradient(ellipse at top,#6ea55e 0 52%,transparent 53%) 0 0/42px 42px repeat-x,
+    linear-gradient(#6aa65d,#487c4a);
+  opacity:.95;
+}
+
+.flower{
+  position:absolute;
+  bottom:50px;
+  width:110px;
+  height:265px;
+  transform-origin:bottom center;
+  opacity:0;
+}
+
+.flower.grow{
+  animation:grow 1.65s cubic-bezier(.12,.8,.24,1) forwards;
+}
+
+.f1{left:1%;animation-delay:.05s}
+.f2{left:50%;margin-left:-55px;animation-delay:.28s}
+.f3{right:0;animation-delay:.52s}
+
+@keyframes grow{
+  0%{opacity:0;transform:translateY(155px) scale(.12)}
+  65%{opacity:1}
+  100%{opacity:1;transform:translateY(0) scale(1)}
+}
+
+.stem{
+  position:absolute;
+  left:50%;
+  bottom:0;
+  transform:translateX(-50%);
+  width:7px;
+  height:170px;
+  border-radius:9px;
+  background:linear-gradient(#68ad6e,#397243);
+}
+
+.leaf{
+  position:absolute;
+  width:46px;
+  height:24px;
+  bottom:62px;
+  border-radius:70% 0 70% 0;
+  background:linear-gradient(135deg,#6fb575,#397844);
+}
+
+.leaf.l{left:16px;transform:rotate(25deg)}
+.leaf.r{right:16px;transform:scaleX(-1) rotate(25deg)}
+
+.head{
+  position:absolute;
+  width:96px;
+  height:96px;
+  left:50%;
+  top:8px;
+  transform:translateX(-50%);
+  animation:sway 3.6s ease-in-out infinite alternate;
+}
+
+@keyframes sway{
+  from{transform:translateX(-50%) rotate(-3deg)}
+  to{transform:translateX(-50%) rotate(4deg)}
+}
+
+.pet{
+  position:absolute;
+  width:32px;
+  height:51px;
+  left:32px;
+  top:23px;
+  border-radius:62% 62% 45% 45%;
+  background:linear-gradient(#ffe765,#f5b717);
+  transform-origin:50% 74%;
+  box-shadow:inset 0 -5px 8px rgba(173,103,0,.08);
+}
+.p1{transform:rotate(0deg) translateY(-28px)}
+.p2{transform:rotate(45deg) translateY(-28px)}
+.p3{transform:rotate(90deg) translateY(-28px)}
+.p4{transform:rotate(135deg) translateY(-28px)}
+.p5{transform:rotate(180deg) translateY(-28px)}
+.p6{transform:rotate(225deg) translateY(-28px)}
+.p7{transform:rotate(270deg) translateY(-28px)}
+.p8{transform:rotate(315deg) translateY(-28px)}
+
+.center{
+  position:absolute;
+  width:44px;
+  height:44px;
+  left:26px;
+  top:26px;
+  border-radius:50%;
+  background:
+    radial-gradient(circle at 35% 35%,#a36b27 0 5%,transparent 6%),
+    radial-gradient(circle at 65% 35%,#7b4916 0 5%,transparent 6%),
+    radial-gradient(circle at 58% 68%,#8d571e 0 5%,transparent 6%),
+    #6c4016;
+  z-index:3;
+}
+
+.reveal-note{
+  position:relative;
+  z-index:5;
+  margin-top:auto;
+  margin-bottom:8px;
+  opacity:0;
+  transform:translateY(18px);
+  transition:.7s ease;
+}
+
+.reveal-note.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.reveal-note p{
+  font-size:1rem;
+  line-height:1.55;
+  margin-bottom:13px;
+  color:#665e50;
+}
+
+/* Carta */
+.letter-card{
+  display:flex;
+  flex-direction:column;
+  text-align:center;
+  padding:28px 22px 24px;
+}
+
+.letter-header{
+  flex:0 0 auto;
+}
+
+.letter-header h2{
+  font-size:2.35rem;
+  margin:5px 0 14px;
+}
+
+.message-box{
+  flex:1 1 auto;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 2px;
+}
+
+.message{
+  max-width:350px;
+  font-size:.99rem;
+  line-height:1.68;
+  color:#514b40;
+  white-space:pre-line;
+}
+
+.cursor{
+  display:inline-block;
+  width:2px;
+  height:1em;
+  background:#aa7607;
+  vertical-align:-2px;
+  margin-left:2px;
+  animation:blink .75s steps(1) infinite;
+}
+
+@keyframes blink{
+  0%,45%{opacity:1}
+  46%,100%{opacity:0}
+}
+
+.final-box{
+  flex:0 0 auto;
+  opacity:0;
+  transform:translateY(14px);
+  transition:.7s ease;
+}
+
+.final-box.show{
+  opacity:1;
+  transform:translateY(0);
+}
+
+.highlight{
+  padding:15px 14px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#fff7c4,#ffe66e);
+  color:#72550f;
+  line-height:1.5;
+  margin-bottom:13px;
+}
+
+.highlight strong{
+  font-size:1.15rem;
+}
+
+.signature{
+  color:#786d59;
+  line-height:1.5;
+  margin-bottom:14px;
+}
+
+.signature strong{
+  color:#a87407;
+  font-size:1.08rem;
+}
+
+.actions{
+  display:flex;
+  gap:10px;
+  justify-content:center;
+}
+
+.secondary{
+  background:#fff8d8;
+  color:#87630c;
+  border:1px solid #ecd071;
+  min-width:116px;
+}
+
+.love-btn{
+  min-width:170px;
+}
+
+/* Partículas */
+#particles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:50;
+  overflow:hidden;
+}
+
+.particle{
+  position:absolute;
+  bottom:-50px;
+  animation:rise linear forwards;
+  filter:drop-shadow(0 4px 5px rgba(0,0,0,.08));
+}
+
+@keyframes rise{
+  0%{opacity:0;transform:translateY(0) rotate(0) scale(.75)}
+  12%{opacity:1}
+  100%{opacity:0;transform:translateY(-115vh) rotate(55deg) scale(1.18)}
+}
+
+.spark{
+  position:absolute;
+  width:6px;
+  height:6px;
+  border-radius:50%;
+  background:#fff;
+  animation:spark 1.25s ease-out forwards;
+}
+
+@keyframes spark{
+  0%{opacity:0;transform:scale(.1)}
+  35%{opacity:1;transform:scale(1.5)}
+  100%{opacity:0;transform:scale(.2)}
+}
+
+@media(max-height:680px){
+  .card{
+    min-height:520px;
+    height:92svh;
+  }
+  .envelope{
+    transform:scale(.88);
+    margin-bottom:19px;
+  }
+  .garden{height:54%}
+  .message{font-size:.92rem;line-height:1.55}
+  .letter-header h2{font-size:2rem}
+}
+
+@media(max-width:360px){
+  .card{width:95vw}
+  .intro-card{padding:28px 18px}
+  .message{font-size:.93rem}
+  .actions{gap:7px}
+  .primary,.secondary{padding:0 17px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<div class="bg">
+  <span class="orb o1"></span>
+  <span class="orb o2"></span>
+  <span class="orb o3"></span>
+</div>
+
+<div id="particles"></div>
+
+<main class="app">
+
+  <!-- ESCENA 1 -->
+  <section class="scene active" id="scene1">
+    <div class="card intro-card">
+      <div class="eyebrow">Un detalle muy especial 💛</div>
+      <h1>Para mi mami</h1>
+
+      <p class="intro-copy">
+        Nickolass preparó algo pequeño, pero hecho con mucho amor para ti.
+      </p>
+
+      <div class="envelope" id="envelope">
+        <div class="env-body"></div>
+        <div class="env-flap"></div>
+        <div class="env-heart">💛</div>
+      </div>
+
+      <button class="primary" id="openBtn">
+        Abrir mi sorpresa 🌻
+      </button>
+
+      <div class="small-sign">De Nickolass para mamá</div>
+    </div>
+  </section>
+
+  <!-- ESCENA 2 -->
+  <section class="scene" id="scene2">
+    <div class="card flower-card">
+
+      <div class="sky-note">
+        <div class="eyebrow">Solo para ti 🌻</div>
+        <h2>Flores para mami</h2>
+      </div>
+
+      <div class="garden">
+        <div class="grass"></div>
+
+        <div class="flower f1">
+          <div class="stem"></div>
+          <span class="leaf l"></span><span class="leaf r"></span>
+          <div class="head">
+            <span class="pet p1"></span><span class="pet p2"></span>
+            <span class="pet p3"></span><span class="pet p4"></span>
+            <span class="pet p5"></span><span class="pet p6"></span>
+            <span class="pet p7"></span><span class="pet p8"></span>
+            <span class="center"></span>
+          </div>
+        </div>
+
+        <div class="flower f2">
+          <div class="stem"></div>
+          <span class="leaf l"></span><span class="leaf r"></span>
+          <div class="head">
+            <span class="pet p1"></span><span class="pet p2"></span>
+            <span class="pet p3"></span><span class="pet p4"></span>
+            <span class="pet p5"></span><span class="pet p6"></span>
+            <span class="pet p7"></span><span class="pet p8"></span>
+            <span class="center"></span>
+          </div>
+        </div>
+
+        <div class="flower f3">
+          <div class="stem"></div>
+          <span class="leaf l"></span><span class="leaf r"></span>
+          <div class="head">
+            <span class="pet p1"></span><span class="pet p2"></span>
+            <span class="pet p3"></span><span class="pet p4"></span>
+            <span class="pet p5"></span><span class="pet p6"></span>
+            <span class="pet p7"></span><span class="pet p8"></span>
+            <span class="center"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal-note" id="revealNote">
+        <p>Estas flores amarillas tienen un mensaje para ti...</p>
+        <button class="primary" id="readBtn">Leer mi cartita 💛</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ESCENA 3 -->
+  <section class="scene" id="scene3">
+    <div class="card letter-card">
+
+      <div class="letter-header">
+        <div class="eyebrow">Con mucho amor 💛</div>
+        <h2>Mami</h2>
+      </div>
+
+      <div class="message-box">
+        <div class="message" id="message"></div>
+      </div>
+
+      <div class="final-box" id="finalBox">
+        <div class="highlight">
+          Para mí siempre serás<br>
+          <strong>la mejor mamá del mundo.</strong> 💛
+        </div>
+
+        <div class="signature">
+          Te quiero mucho, mami.<br>
+          Con todo mi amor,<br>
+          <strong>Nickolass 👶💛</strong>
+        </div>
+
+        <div class="actions">
+          <button class="secondary" id="replayBtn">↻ Repetir</button>
+          <button class="primary love-btn" id="loveBtn">Te quiero 💛</button>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+</main>
+
+<script>
+const scenes = [
+  document.getElementById("scene1"),
+  document.getElementById("scene2"),
+  document.getElementById("scene3")
+];
+
+const envelope = document.getElementById("envelope");
+const openBtn = document.getElementById("openBtn");
+const readBtn = document.getElementById("readBtn");
+const revealNote = document.getElementById("revealNote");
+const message = document.getElementById("message");
+const finalBox = document.getElementById("finalBox");
+const loveBtn = document.getElementById("loveBtn");
+const replayBtn = document.getElementById("replayBtn");
+const particles = document.getElementById("particles");
+const flowers = document.querySelectorAll(".flower");
+
+const text = `Estas flores amarillas son para ti, porque eres una persona muy especial para mí.
+
+Aunque todavía soy pequeño y muchas veces no sé cómo decirte todo lo que siento, quiero que sepas que soy muy feliz de tenerte como mi mamá.
+
+Gracias por cuidarme, abrazarme, protegerme y estar siempre conmigo.
+
+Cada día aprendo algo nuevo a tu lado, y algún día entenderé todo lo que haces por mí.`;
+
+function showScene(index){
+  scenes.forEach((s,i)=>s.classList.toggle("active",i===index));
+}
+
+openBtn.addEventListener("click",()=>{
+  openBtn.disabled = true;
+  envelope.classList.add("open");
+  rain(12);
+
+  setTimeout(()=>{
+    showScene(1);
+
+    flowers.forEach(f=>f.classList.add("grow"));
+
+    setTimeout(()=>{
+      revealNote.classList.add("show");
+    },1650);
+  },900);
+});
+
+readBtn.addEventListener("click",()=>{
+  rain(9);
+
+  showScene(2);
+
+  setTimeout(typeMessage,500);
+});
+
+function typeMessage(){
+  message.innerHTML = '<span id="typed"></span><span class="cursor"></span>';
+  const typed = document.getElementById("typed");
+  let i = 0;
+
+  function write(){
+    if(i < text.length){
+      const c = text[i];
+
+      typed.innerHTML += c === "\n" ? "<br>" : c;
+      i++;
+
+      let pause = 18;
+      if(c === ".") pause = 105;
+      else if(c === ",") pause = 55;
+      else if(c === "\n") pause = 90;
+
+      setTimeout(write,pause);
+    }else{
+      document.querySelector(".cursor")?.remove();
+      setTimeout(()=>finalBox.classList.add("show"),350);
+    }
+  }
+
+  write();
+}
+
+loveBtn.addEventListener("click",()=>{
+  rain(35);
+  sparks(26);
+  loveBtn.textContent = "Siempre contigo 💛";
+
+  setTimeout(()=>{
+    loveBtn.textContent = "Te quiero 💛";
+  },2300);
+});
+
+replayBtn.addEventListener("click",()=>{
+  message.innerHTML = "";
+  finalBox.classList.remove("show");
+  revealNote.classList.remove("show");
+  envelope.classList.remove("open");
+  flowers.forEach(f=>f.classList.remove("grow"));
+  openBtn.disabled = false;
+  showScene(0);
+});
+
+function rain(count){
+  const icons = ["💛","🌻","🌼","✨"];
+
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const p = document.createElement("span");
+      p.className = "particle";
+      p.textContent = icons[Math.floor(Math.random()*icons.length)];
+      p.style.left = Math.random()*96 + "vw";
+      p.style.fontSize = (18 + Math.random()*17) + "px";
+      p.style.animationDuration = (3.5 + Math.random()*2.5) + "s";
+      particles.appendChild(p);
+      setTimeout(()=>p.remove(),6500);
+    },i*85);
+  }
+}
+
+function sparks(count){
+  for(let i=0;i<count;i++){
+    setTimeout(()=>{
+      const s = document.createElement("span");
+      s.className = "spark";
+      s.style.left = Math.random()*100 + "vw";
+      s.style.top = Math.random()*100 + "vh";
+      particles.appendChild(s);
+      setTimeout(()=>s.remove(),1400);
+    },i*55);
+  }
+}
+</script>
+
+</body>
+</html>
